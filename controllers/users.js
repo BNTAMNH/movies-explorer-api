@@ -57,8 +57,25 @@ module.exports.getUserInfo = (req, res, next) => {
       if (!user) {
         throw new NotFoundError(notFoundUser);
       }
-
-      res.send(user);
+      res.send({ name: user.name, email: user.email });
     })
     .catch(next);
+};
+
+module.exports.updateUserInfo = (req, res, next) => {
+  const userId = req.user._id;
+  const { name, email } = req.body;
+
+  User.findByIdAndUpdate(userId, { name, email }, { new: true, runValidators: true })
+    .orFail(new NotFoundError(notFoundUser))
+    .then((user) => {
+      res.send({ name: user.name, email: user.email });
+    })
+    .catch((err) => {
+      if (err.name === 'CastError' || err.name === 'ValidationError') {
+        next(new BadRequestError(badRequest));
+      } else {
+        next(err);
+      }
+    });
 };
