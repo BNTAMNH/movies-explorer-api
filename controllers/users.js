@@ -8,8 +8,14 @@ const User = require('../models/user');
 const AuthError = require('../errors/AuthError');
 const ConflictError = require('../errors/ConflictError');
 const BadRequestError = require('../errors/BadRequestError');
+const NotFoundError = require('../errors/NotFoundError');
 
-const { incorrectEmailOrPassword, emailConflict, badRequest } = require('../utils/errorMessages');
+const {
+  incorrectEmailOrPassword,
+  emailConflict,
+  badRequest,
+  notFoundUser,
+} = require('../utils/errorMessages');
 
 module.exports.createUser = (req, res, next) => {
   const { name, email } = req.body;
@@ -43,4 +49,16 @@ module.exports.login = (req, res, next) => {
       }
       next(err);
     });
+};
+
+module.exports.getUserInfo = (req, res, next) => {
+  User.findById(req.user._id)
+    .then((user) => {
+      if (!user) {
+        throw new NotFoundError(notFoundUser);
+      }
+
+      res.send(user);
+    })
+    .catch(next);
 };
