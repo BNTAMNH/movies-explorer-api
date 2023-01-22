@@ -1,7 +1,8 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-
+const errorHandler = require('./middlewares/errorHandler');
 const router = require('./routes/index');
 
 const app = express();
@@ -12,6 +13,8 @@ mongoose.set('strictQuery', false);
 mongoose.connect('mongodb://localhost:27017/bitfilmsdb');
 
 app.use('/', router);
+
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   // eslint-disable-next-line no-console
