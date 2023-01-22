@@ -18,11 +18,11 @@ const userSchema = new mongoose.Schema({
       },
       message: 'Некорректный Email',
     },
-    password: {
-      type: String,
-      required: true,
-      select: false,
-    },
+  },
+  password: {
+    type: String,
+    required: true,
+    select: false,
   },
 }, { versionKey: false });
 
