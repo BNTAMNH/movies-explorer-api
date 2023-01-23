@@ -1,5 +1,4 @@
-### API для сервиса поиска фильмов
-Alt-H1
+## API для сервиса поиска фильмов
 ------
 Ссылка:  https://ya-movies-explorer.nomoredomains.rocks
 
