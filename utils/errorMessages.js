@@ -4,4 +4,6 @@ module.exports = {
   badRequest: 'Переданы некорректные данные',
   notFoundUser: 'Пользователь не найден',
   needAuthorization: 'Необходима авторизация',
+  notFoundMovie: 'Фильм не найден',
+  forbiddenError: 'Недостаточно прав для выполнения операции',
 };
