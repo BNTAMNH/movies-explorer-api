@@ -6,17 +6,11 @@ const { jwtDev } = require('../utils/config');
 
 const User = require('../models/user');
 
-const AuthError = require('../errors/AuthError');
 const ConflictError = require('../errors/ConflictError');
 const BadRequestError = require('../errors/BadRequestError');
 const NotFoundError = require('../errors/NotFoundError');
 
-const {
-  incorrectEmailOrPassword,
-  emailConflict,
-  badRequest,
-  notFoundUser,
-} = require('../utils/errorMessages');
+const { emailConflict, badRequest, notFoundUser } = require('../utils/responseMessages');
 
 module.exports.createUser = (req, res, next) => {
   const { name, email } = req.body;
@@ -44,12 +38,7 @@ module.exports.login = (req, res, next) => {
       const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : jwtDev, { expiresIn: '7d' });
       res.send({ token });
     })
-    .catch((err) => {
-      if (err.message === 'IncorrectEmail') {
-        next(new AuthError(incorrectEmailOrPassword));
-      }
-      next(err);
-    });
+    .catch((err) => next(err));
 };
 
 module.exports.getUserInfo = (req, res, next) => {

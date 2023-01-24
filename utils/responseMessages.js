@@ -6,4 +6,6 @@ module.exports = {
   needAuthorization: 'Необходима авторизация',
   notFoundMovie: 'Фильм не найден',
   forbiddenError: 'Недостаточно прав для выполнения операции',
+  movieDelete: 'Фильм удален',
+  pageNotFound: 'Запрашиваемая страница не найдена',
 };

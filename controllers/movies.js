@@ -3,38 +3,12 @@ const Movie = require('../models/movie');
 const BadRequestError = require('../errors/BadRequestError');
 const NotFoundError = require('../errors/NotFoundError');
 const ForbiddenError = require('../errors/ForbiddenError');
-const { badRequest, notFoundMovie, forbiddenError } = require('../utils/errorMessages');
+const {
+  badRequest, notFoundMovie, forbiddenError, movieDelete,
+} = require('../utils/responseMessages');
 
 module.exports.createMovie = (req, res, next) => {
-  const {
-    country,
-    director,
-    duration,
-    year,
-    description,
-    image,
-    trailerLink,
-    nameRU,
-    nameEN,
-    thumbnail,
-    movieId,
-  } = req.body;
-  const owner = req.user._id;
-
-  Movie.create({
-    country,
-    director,
-    duration,
-    year,
-    description,
-    image,
-    trailerLink,
-    nameRU,
-    nameEN,
-    thumbnail,
-    movieId,
-    owner,
-  })
+  Movie.create({ ...req.body, owner: req.user._id })
     .then((movie) => res.send(movie))
     .catch((err) => {
       if (err.name === 'ValidationError') {
@@ -61,7 +35,7 @@ module.exports.deleteMovie = (req, res, next) => {
       }
       return movie.remove();
     })
-    .then(() => res.send({ message: 'Фильм удален' }))
+    .then(() => res.send({ message: movieDelete }))
     .catch((err) => {
       if (err.name === 'CastError') {
         next(new BadRequestError(badRequest));

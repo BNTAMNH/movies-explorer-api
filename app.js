@@ -7,7 +7,7 @@ const { errors } = require('celebrate');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const errorHandler = require('./middlewares/errorHandler');
 const cors = require('./middlewares/cors');
-const router = require('./routes/index');
+const router = require('./routes');
 const { devMongoUrl } = require('./utils/config');
 const { rateLimit } = require('./utils/rateLimit');
 
