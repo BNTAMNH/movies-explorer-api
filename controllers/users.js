@@ -62,7 +62,9 @@ module.exports.updateUserInfo = (req, res, next) => {
       res.send({ name: user.name, email: user.email });
     })
     .catch((err) => {
-      if (err.name === 'CastError' || err.name === 'ValidationError') {
+      if (err.code === 11000) {
+        next(new ConflictError(emailConflict));
+      } else if (err.name === 'CastError' || err.name === 'ValidationError') {
         next(new BadRequestError(badRequest));
       } else {
         next(err);

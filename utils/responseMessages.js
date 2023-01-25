@@ -8,4 +8,5 @@ module.exports = {
   forbiddenError: 'Недостаточно прав для выполнения операции',
   movieDelete: 'Фильм удален',
   pageNotFound: 'Запрашиваемая страница не найдена',
+  serverError: 'На сервере произошла ошибка',
 };
